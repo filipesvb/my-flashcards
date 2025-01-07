@@ -1,1 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&display=swap");
+
+:root {
+  --primary-color: #272727;
+  --secondary-color: #d4aa7d;
+
+  background-color: var(--primary-color);
+
+  body {
+    min-height: 100vh;
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Trebuchet MS", sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
