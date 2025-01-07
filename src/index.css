@@ -7,7 +7,7 @@
   background-color: var(--primary-color);
 
   body {
-    min-height: 100vh;
+    height: 100vh;
   }
 }
 
@@ -21,7 +21,6 @@
   list-style: none;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
+#root {
+  height: 100%;
 }
