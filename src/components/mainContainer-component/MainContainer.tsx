@@ -1,3 +1,4 @@
+import GrupoCard from "../grupoCard-component/GrupoCard";
 import "./MainContainer.css";
 
 const MainContainer = () => {
@@ -5,7 +6,7 @@ const MainContainer = () => {
     <>
       <main>
         <div className="container shelf">
-          <div className="shelf-background visible">
+          <div className={`shelf-background`}>
             <h2>
               Clique duas vezes para adicionar <br /> <span>+</span>
             </h2>
