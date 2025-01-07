@@ -1,0 +1,34 @@
+header {
+  width: 100%;
+  background-color: var(--primary-color);
+  padding: 1rem 0;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: "Krona One", "Montserrat", "Times New Roman";
+    font-weight: 400;
+  }
+
+  nav {
+    ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      li {
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          text-decoration: none;
+          color: white;
+
+          &:hover {
+            color: var(--secondary-color);
+          }
+        }
+      }
+    }
+  }
+}
