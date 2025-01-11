@@ -1,15 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import "./MainContainer.css";
 import GrupoCard from "../grupoCard-component/GrupoCard";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const MainContainer = () => {
   function generateUniqueId() {
     return uuidv4();
   }
 
+  const storagedCountGroupCards = JSON.parse(
+    localStorage.getItem("storage_countGroupCards") || "0"
+  );
+  const [countGroupCards, setCountGroupCards] = useState(() => {
+    return storagedCountGroupCards ? storagedCountGroupCards : 0;
+  });
+
+  // Restaura os cards do filho da memória
   const storagedChildCardsArray = JSON.parse(
     localStorage.getItem("storage_childCardsArray") || "[]"
   ).map(
@@ -23,7 +31,7 @@ const MainContainer = () => {
     return storagedChildCardsArray ? storagedChildCardsArray : [];
   });
 
-  // Função chamada desde o filho
+  // Função chamada de dentro do filho
   function updateGrupoCardArrayOfCards(
     id: string,
     cards: { sentence: string; answer: string }[]
@@ -44,15 +52,6 @@ const MainContainer = () => {
     );
   }, [childCardsArray]);
 
-  //
-  //
-
-  //
-  //
-
-  //
-
-  //
   // Restaura os GrupoCards da memória
   const storagedGrupoCards = JSON.parse(
     localStorage.getItem("storage_gruposCards") || "[]"
@@ -77,20 +76,20 @@ const MainContainer = () => {
     return storagedGrupoCards ? storagedGrupoCards : [];
   });
 
-  function handleAddGroup(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (e.detail === 2) {
-      const name = window.prompt("Digite o nome");
-      if (!name) return;
-      setGrupoCardsArray([
-        ...grupoCardsArray,
-        <GrupoCard
-          nome={name}
-          cards={[]}
-          id={generateUniqueId()}
-          onUpdateCards={updateGrupoCardArrayOfCards}
-        />,
-      ]);
-    }
+  function handleAddGroup() {
+    const name = window.prompt("Digite o nome");
+    if (!name) return;
+    setGrupoCardsArray([
+      ...grupoCardsArray,
+      <GrupoCard
+        nome={name}
+        cards={[]}
+        id={generateUniqueId()}
+        onUpdateCards={updateGrupoCardArrayOfCards}
+      />,
+    ]);
+
+    setCountGroupCards(countGroupCards + 1);
   }
 
   useEffect(() => {
@@ -103,16 +102,30 @@ const MainContainer = () => {
     });
 
     localStorage.setItem("storage_gruposCards", JSON.stringify(grupoCardsData));
-  }, [grupoCardsArray]);
+    localStorage.setItem(
+      "storage_countGroupCards",
+      JSON.stringify(countGroupCards)
+    );
+  }, [grupoCardsArray, countGroupCards]);
 
   return (
     <>
       <main>
         <div className="container shelf">
+          <button
+            className="addGroupButton"
+            onClick={() => {
+              handleAddGroup();
+            }}
+          >
+            <AddCircleIcon fontSize="large" />
+          </button>
           <div
-            className={`shelf-background`}
+            className={`shelf-background ${countGroupCards <= 0 ? "" : "invisible"}`}
             onClick={(e) => {
-              handleAddGroup(e);
+              if (e.detail === 2) {
+                handleAddGroup();
+              }
             }}
           >
             <h2>

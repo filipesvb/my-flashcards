@@ -3,6 +3,7 @@
 :root {
   --primary-color: #272727;
   --secondary-color: #d4aa7d;
+  --container-width: 900px;
 
   background-color: var(--primary-color);
 
