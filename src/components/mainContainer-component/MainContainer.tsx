@@ -6,16 +6,17 @@ import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const MainContainer = () => {
+  // Deleta o GrupoCardsArray selecionado por meio de seu ID
+  function handleDeleteGroup(id: string) {
+    setGrupoCardsArray((prevGrupoCardsArray) =>
+      prevGrupoCardsArray.filter((g) => g.props.id !== id)
+    );
+  }
+
+  // Cria um ID aleatório e único
   function generateUniqueId() {
     return uuidv4();
   }
-
-  const storagedCountGroupCards = JSON.parse(
-    localStorage.getItem("storage_countGroupCards") || "0"
-  );
-  const [countGroupCards, setCountGroupCards] = useState(() => {
-    return storagedCountGroupCards ? storagedCountGroupCards : 0;
-  });
 
   // Restaura os cards do filho da memória
   const storagedChildCardsArray = JSON.parse(
@@ -62,6 +63,7 @@ const MainContainer = () => {
       cards: { sentence: string; answer: string }[];
     }) => (
       <GrupoCard
+        onDeleteClick={handleDeleteGroup}
         id={item.id}
         nome={item.nome}
         cards={(() => {
@@ -82,14 +84,13 @@ const MainContainer = () => {
     setGrupoCardsArray([
       ...grupoCardsArray,
       <GrupoCard
+        onDeleteClick={handleDeleteGroup}
         nome={name}
         cards={[]}
         id={generateUniqueId()}
         onUpdateCards={updateGrupoCardArrayOfCards}
       />,
     ]);
-
-    setCountGroupCards(countGroupCards + 1);
   }
 
   useEffect(() => {
@@ -102,11 +103,11 @@ const MainContainer = () => {
     });
 
     localStorage.setItem("storage_gruposCards", JSON.stringify(grupoCardsData));
-    localStorage.setItem(
-      "storage_countGroupCards",
-      JSON.stringify(countGroupCards)
-    );
-  }, [grupoCardsArray, countGroupCards]);
+
+    console.log(grupoCardsData);
+  }, [grupoCardsArray]);
+
+  const countOfGrupos = grupoCardsArray.length;
 
   return (
     <>
@@ -121,7 +122,7 @@ const MainContainer = () => {
             <AddCircleIcon fontSize="large" />
           </button>
           <div
-            className={`shelf-background ${countGroupCards <= 0 ? "" : "invisible"}`}
+            className={`shelf-background ${countOfGrupos <= 0 ? "" : "invisible"}`}
             onClick={(e) => {
               if (e.detail === 2) {
                 handleAddGroup();

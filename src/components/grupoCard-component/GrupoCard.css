@@ -4,4 +4,47 @@
   max-width: 280px;
   padding: 0.5rem 1rem;
   background-color: #c0c0c0;
+  position: relative;
+
+  .grupoCard-closeButton__container {
+    position: absolute;
+    right: 0.5rem;
+
+    BasicMenu {
+      border: solid 2px red;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .grupoCard-closeButton-options {
+      position: relative;
+
+      right: -1rem;
+      background-color: #ffffff;
+      border: 1px solid;
+
+      ul {
+        width: 100%;
+        li {
+          width: 100%;
+
+          padding: 0.5rem 2rem;
+        }
+        li:hover {
+          background-color: #ccc;
+        }
+      }
+    }
+  }
 }

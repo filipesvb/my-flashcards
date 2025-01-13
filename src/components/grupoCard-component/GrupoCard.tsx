@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./GrupoCard.css";
 
+import BasicMenu from "../BasicMenu";
+
 interface GrupoCardProps {
   nome: string;
   id: string;
@@ -9,9 +11,20 @@ interface GrupoCardProps {
     id: string,
     cards: { sentence: string; answer: string }[]
   ) => void;
+  onDeleteClick: (id: string) => void;
 }
 
-const GrupoCard = ({ nome, id, cards, onUpdateCards }: GrupoCardProps) => {
+const GrupoCard = ({
+  nome,
+  id,
+  cards,
+  onUpdateCards,
+  onDeleteClick,
+}: GrupoCardProps) => {
+  function handleDelete() {
+    onDeleteClick(id);
+  }
+
   // Vetor de cards
   const [cardsArray, setCardsArray] = useState<
     { sentence: string; answer: string }[]
@@ -39,6 +52,9 @@ const GrupoCard = ({ nome, id, cards, onUpdateCards }: GrupoCardProps) => {
   return (
     <>
       <div className="grupoCard">
+        <div className="grupoCard-closeButton__container">
+          <BasicMenu onDeleteClick={handleDelete} />
+        </div>
         <h1>{nome}</h1>
         <form onSubmit={handleSubmit}>
           <label>
@@ -51,7 +67,7 @@ const GrupoCard = ({ nome, id, cards, onUpdateCards }: GrupoCardProps) => {
         </form>
         <button
           onClick={() => {
-            console.log(cardsArray);
+            console.log({ nome, id, cardsArray });
           }}
         >
           Log
