@@ -8,6 +8,10 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 const MainContainer = () => {
   // Deleta o GrupoCardsArray selecionado por meio de seu ID
   function handleDeleteGroup(id: string) {
+    const yesToDelete = confirm("Do you really want to delete?");
+
+    if (!yesToDelete) return;
+
     setGrupoCardsArray((prevGrupoCardsArray) =>
       prevGrupoCardsArray.filter((g) => g.props.id !== id)
     );
